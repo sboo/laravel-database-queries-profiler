@@ -26,7 +26,7 @@ class CommandsTest extends AbstractUnitTestCase
     /**
      * @param string $command_signature
      */
-    protected function assertArtisanCommandExists(string $command_signature): void
+    protected function assertArtisanCommandExists($command_signature)
     {
         $this->assertNotFalse(
             $this->artisan($command_signature, ['--help']),
