@@ -1,0 +1,28 @@
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Environment deps.
+/.env
+composer.lock
+/*ide*helper*.*
+
+# IDEs
+/nbproject
+/.idea
+
+# WIKIs
+/wiki
+
+# Vendors
+/vendor
+
+# Temp dirs & trash
+/temp
+/tmp
+/*.tmp
+.DS_Store
+.php_cs.cache
+
+# etc.
+/coverage

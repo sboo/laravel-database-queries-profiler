@@ -1,0 +1,50 @@
+{
+  "name": "tarampampam/laravel-database-queries-profiler",
+  "description": "Package for profiling laravel database queries",
+  "keywords": ["laravel", "database", "profiling"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tarampampam",
+      "email": "tarampampam@users.noreply.github.com",
+      "homepage": "https://github.com/tarampampam/laravel-database-queries-profiler"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "laravel/laravel": "^5.4",
+    "mockery/mockery": "0.9.*",
+    "phpunit/phpunit": "^5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tarampampam\\LaravelDatabaseQueriesProfiler\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tarampampam\\LaravelDatabaseQueriesProfiler\\Tests\\": "tests"
+    }
+  },
+  "suggest": {
+    "predis/predis": "Use Laravel cache driver with predis driver"
+  },
+  "support": {
+    "issues": "https://github.com/tarampampam/laravel-database-queries-profiler/issues",
+    "source": "https://github.com/tarampampam/laravel-database-queries-profiler"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Tarampampam\\LaravelDatabaseQueriesProfiler\\DatabaseQueriesProfilerServiceProvider"
+      ]
+    }
+  }
+}
