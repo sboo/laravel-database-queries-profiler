@@ -2,11 +2,11 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
+use Traversable;
 use Illuminate\Contracts\Foundation\Application;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
-use Traversable;
 
 /**
  * Class DatabaseQueriesProfiler.
@@ -70,9 +70,9 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
             if ($this->top->isEnabled()) {
                 $this->top->load(); // For multi-threads supports
 
-                if (!$this->top->queryContentIsInExcludesList($query)) {
+                if (! $this->top->queryContentIsInExcludesList($query)) {
                     if (
-                        !$this->top->stackIsFull()
+                        ! $this->top->stackIsFull()
                         || $this->top->queryDurationIsMoreThenExistsInTopQueriesStack($query)
                     ) {
                         $this->top->aggregate($query, true);
@@ -86,22 +86,6 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
                 $this->counters->aggregate($query, true);
             }
         }
-    }
-
-    /**
-     * Write query object into log file.
-     *
-     * @param DatabaseQuery $query
-     */
-    protected function writeQueryIntoLog(DatabaseQuery $query)
-    {
-        $log_level = (string) $this->getConfigValue('logging.queries.all.level', 'debug');
-
-        $this->getLoggerInstance()->write(
-            $log_level,
-            'Query to the database was caught',
-            $query->toArray()
-        );
     }
 
     /**
@@ -122,5 +106,21 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
     public function top()
     {
         return $this->top;
+    }
+
+    /**
+     * Write query object into log file.
+     *
+     * @param DatabaseQuery $query
+     */
+    protected function writeQueryIntoLog(DatabaseQuery $query)
+    {
+        $log_level = (string) $this->getConfigValue('logging.queries.all.level', 'debug');
+
+        $this->getLoggerInstance()->write(
+            $log_level,
+            'Query to the database was caught',
+            $query->toArray()
+        );
     }
 }
