@@ -117,11 +117,9 @@ class CountersAggregator extends AbstractAggregator
      */
     public function clean()
     {
-        $now = Carbon::now();
-
-        $this->last_five_seconds->removeAllQueriesOlderThen((clone $now)->subSeconds(5));
-        $this->last_fifteen_seconds->removeAllQueriesOlderThen((clone $now)->subSeconds(15));
-        $this->last_minute->removeAllQueriesOlderThen((clone $now)->subSeconds(60));
+        $this->last_five_seconds->removeAllQueriesOlderThen(Carbon::now()->subSeconds(5));
+        $this->last_fifteen_seconds->removeAllQueriesOlderThen(Carbon::now()->subSeconds(15));
+        $this->last_minute->removeAllQueriesOlderThen(Carbon::now()->subSeconds(60));
     }
 
     /**
