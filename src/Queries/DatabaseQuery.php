@@ -46,6 +46,20 @@ class DatabaseQuery extends AbstractQuery
      */
     public function __construct($query_data = [])
     {
+        $this->configure($query_data);
+
+        if (empty($this->getWhen())) {
+            $this->setWhen(Carbon::now());
+        }
+    }
+
+    /**
+     * Self-configure method.
+     *
+     * @param array|Traversable $query_data
+     */
+    public function configure($query_data = [])
+    {
         if ($query_data instanceof Traversable || is_array($query_data)) {
             foreach ($query_data as $key => $query_datum) {
                 switch ($key) {
@@ -76,10 +90,6 @@ class DatabaseQuery extends AbstractQuery
                         break;
                 }
             }
-        }
-
-        if (empty($this->getWhen())) {
-            $this->setWhen(Carbon::now());
         }
     }
 

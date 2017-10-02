@@ -28,7 +28,7 @@ class ProfilerSettingsCommand extends AbstractCommand
      */
     public function handle()
     {
-        $settings = array_dot(config($this->profiler::getConfigRootKeyName()));
+        $settings = array_dot(config($this->profiler->getConfigRootKeyName()));
 
         array_walk($settings, function (&$value, $key) {
             $value = [$key, is_bool($value) ? ($value ? 'true' : 'false') : (is_scalar($value) ? $value : '-')];
