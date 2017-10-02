@@ -2,13 +2,13 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator;
 
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
- * Class CounterStack
+ * Class CounterStack.
  *
  * Counter stack storage container.
  */
@@ -56,26 +56,6 @@ class CounterStack implements Arrayable
     }
 
     /**
-     * Get stack durations values as an array.
-     *
-     * @return float[]|array
-     */
-    protected function getStackDurationsValues()
-    {
-        $result = [];
-
-        foreach ($this->stack as $query) {
-            $duration = $query->getDuration();
-
-            if (!is_null($duration)) {
-                array_push($result, (float) $query->getDuration());
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Get minimum duration value of stack items.
      *
      * @return float
@@ -93,34 +73,6 @@ class CounterStack implements Arrayable
     public function getAveragedDuration()
     {
         return $this->getRoundedFloatValue($this->getStackDurationsValues());
-    }
-
-    /**
-     * Returns rounded values for array of float values.
-     *
-     * @param float[] ...$values
-     *
-     * @return float
-     */
-    protected function getRoundedFloatValue($values = [0.0])
-    {
-        $floated_values_stack = [];
-
-        foreach ($values as &$value) {
-            if (($value = floatval($value)) && $value > 0) {
-                array_push($floated_values_stack, $value);
-            }
-        }
-
-        if (!empty($floated_values_stack)) {
-            try {
-                return array_sum($floated_values_stack) / count($floated_values_stack);
-            } catch (Exception $e) {
-                // Do nothing
-            }
-        }
-
-        return 0.0;
     }
 
     /**
@@ -170,5 +122,53 @@ class CounterStack implements Arrayable
             $this->stack = array_filter($this->stack);
             $this->stack = array_values($this->stack);
         }
+    }
+
+    /**
+     * Get stack durations values as an array.
+     *
+     * @return float[]|array
+     */
+    protected function getStackDurationsValues()
+    {
+        $result = [];
+
+        foreach ($this->stack as $query) {
+            $duration = $query->getDuration();
+
+            if (! is_null($duration)) {
+                array_push($result, (float) $query->getDuration());
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns rounded values for array of float values.
+     *
+     * @param float[] ...$values
+     *
+     * @return float
+     */
+    protected function getRoundedFloatValue($values = [0.0])
+    {
+        $floated_values_stack = [];
+
+        foreach ($values as &$value) {
+            if (($value = floatval($value)) && $value > 0) {
+                array_push($floated_values_stack, $value);
+            }
+        }
+
+        if (! empty($floated_values_stack)) {
+            try {
+                return array_sum($floated_values_stack) / count($floated_values_stack);
+            } catch (Exception $e) {
+                // Do nothing
+            }
+        }
+
+        return 0.0;
     }
 }

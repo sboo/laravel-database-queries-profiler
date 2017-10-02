@@ -3,12 +3,12 @@
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
 use Illuminate\Support\Facades\Facade;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
- * Class DatabaseQueriesProfilerFacade
+ * Class DatabaseQueriesProfilerFacade.
  *
  * Database queries profiler facade.
  *

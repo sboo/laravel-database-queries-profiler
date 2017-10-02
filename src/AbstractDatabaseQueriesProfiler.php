@@ -2,13 +2,13 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
-use Illuminate\Cache\Repository as CacheRepository;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Log\Writer as IlluminateLogWriter;
+use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 /**
- * Class AbstractDatabaseQueriesProfiler
+ * Class AbstractDatabaseQueriesProfiler.
  *
  * Abstract database queries profiler.
  */
@@ -42,7 +42,7 @@ abstract class AbstractDatabaseQueriesProfiler implements DatabaseQueriesProfile
     {
         static $instance = null;
 
-        if (!($instance instanceof IlluminateLogWriter)) {
+        if (! ($instance instanceof IlluminateLogWriter)) {
             $instance = $this->app->make('log');
         }
 
@@ -56,7 +56,7 @@ abstract class AbstractDatabaseQueriesProfiler implements DatabaseQueriesProfile
     {
         static $instance = null;
 
-        if (!($instance instanceof CacheRepository)) {
+        if (! ($instance instanceof CacheRepository)) {
             $storage = (string) $this->getConfigValue('storage.use', 'file');
 
             $instance = $this->app->make('cache')->store($storage);
@@ -72,7 +72,7 @@ abstract class AbstractDatabaseQueriesProfiler implements DatabaseQueriesProfile
     {
         static $instance = null;
 
-        if (!($instance instanceof ConfigRepository)) {
+        if (! ($instance instanceof ConfigRepository)) {
             $instance = $this->app->make('config');
         }
 

@@ -5,7 +5,7 @@ namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
- * Interface AggregatorInterface
+ * Interface AggregatorInterface.
  *
  * Aggregator interface.
  */

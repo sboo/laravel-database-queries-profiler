@@ -3,12 +3,12 @@
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator;
 
 use Carbon\Carbon;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\AbstractAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerInterface;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
- * Class CountersAggregator
+ * Class CountersAggregator.
  */
 class CountersAggregator extends AbstractAggregator
 {
@@ -26,6 +26,19 @@ class CountersAggregator extends AbstractAggregator
      * @var CounterStack
      */
     protected $last_minute;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(DatabaseQueriesProfilerInterface $profiler)
+    {
+        parent::__construct($profiler);
+
+        // Initialize counters objects
+        foreach (array_keys($this->toArray()) as $stack_name) {
+            $this->{$stack_name} = new CounterStack;
+        }
+    }
 
     /**
      * Get 'last five seconds' counter object.
@@ -60,19 +73,6 @@ class CountersAggregator extends AbstractAggregator
     /**
      * {@inheritdoc}
      */
-    public function __construct(DatabaseQueriesProfilerInterface $profiler)
-    {
-        parent::__construct($profiler);
-
-        // Initialize counters objects
-        foreach (array_keys($this->toArray()) as $stack_name) {
-            $this->{$stack_name} = new CounterStack;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function load()
     {
         $from_storage = (array) $this->getStorageRepository()->get($this->getStorageKeyName());
@@ -86,14 +86,6 @@ class CountersAggregator extends AbstractAggregator
         }
 
         $this->clean();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getStorageKeyName()
-    {
-        return 'database_queries_profiler_counters';
     }
 
     /**
@@ -166,5 +158,13 @@ class CountersAggregator extends AbstractAggregator
         if ($and_save === true) {
             $this->save();
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getStorageKeyName()
+    {
+        return 'database_queries_profiler_counters';
     }
 }
