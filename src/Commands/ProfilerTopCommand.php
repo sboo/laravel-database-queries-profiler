@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
- * Class ProfilerTopCommand
+ * Class ProfilerTopCommand.
  *
  * @todo: Write class description.
  */
@@ -34,7 +34,7 @@ class ProfilerTopCommand extends AbstractCommand
         /** @var DatabaseQuery[] $top_stack */
         $top_stack = (array) $this->profiler->top()->toArray();
 
-        if (!empty($top_stack)) {
+        if (! empty($top_stack)) {
             // Format table headers
             $headers = array_map(function (&$item) {
                 return Str::ucfirst(str_replace(['_', '-'], ' ', strval($item)));

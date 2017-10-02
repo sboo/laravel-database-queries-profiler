@@ -2,13 +2,12 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Commands;
 
-use Carbon\Carbon;
-use Illuminate\Console\Command;
 use Exception;
+use Illuminate\Console\Command;
 use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
 
 /**
- * Class AbstractCommand
+ * Class AbstractCommand.
  *
  * Abstract command class.
  */
@@ -48,9 +47,9 @@ abstract class AbstractCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
-     *
      * @throws Exception
+     *
+     * @return void
      */
     abstract public function handle();
 }

@@ -2,14 +2,14 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
+use Traversable;
 use Illuminate\Contracts\Foundation\Application;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
-use Traversable;
 
 /**
- * Class DatabaseQueriesProfiler
+ * Class DatabaseQueriesProfiler.
  *
  * Database queries profiler.
  */
@@ -64,9 +64,9 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
             if ($this->top->isEnabled()) {
                 $this->top->load(); // For multi-threads supports
 
-                if (!$this->top->queryContentIsInExcludesList($query)) {
+                if (! $this->top->queryContentIsInExcludesList($query)) {
                     if (
-                        !$this->top->stackIsFull()
+                        ! $this->top->stackIsFull()
                         || $this->top->queryDurationIsMoreThenExistsInTopQueriesStack($query)
                     ) {
                         $this->top->aggregate($query, true);
@@ -101,7 +101,7 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
     {
         return $this->top;
     }
-    
+
     /**
      * Write query object into log file.
      *

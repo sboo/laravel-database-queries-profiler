@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
 
 /**
- * Class ProfilerCountersCommand
+ * Class ProfilerCountersCommand.
  *
  * @todo: Write class description.
  */

@@ -2,12 +2,12 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
-use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Log\Writer as IlluminateLogWriter;
+use Illuminate\Cache\Repository as CacheRepository;
 
 /**
- * Interface DatabaseQueriesProfilerInterface
+ * Interface DatabaseQueriesProfilerInterface.
  */
 interface DatabaseQueriesProfilerInterface
 {

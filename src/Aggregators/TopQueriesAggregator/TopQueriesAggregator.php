@@ -4,11 +4,11 @@ namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggre
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\AbstractAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\AbstractAggregator;
 
 /**
- * Class TopQueriesAggregator
+ * Class TopQueriesAggregator.
  */
 class TopQueriesAggregator extends AbstractAggregator
 {
@@ -18,14 +18,6 @@ class TopQueriesAggregator extends AbstractAggregator
      * @var DatabaseQuery[]|array
      */
     protected $stack = [];
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getStorageKeyName()
-    {
-        return 'database_queries_profiler_top';
-    }
 
     /**
      * {@inheritdoc}
@@ -64,9 +56,9 @@ class TopQueriesAggregator extends AbstractAggregator
      */
     public function clean()
     {
-        if (!empty($this->stack)) {
-            $changes_made = false;
-            $lifetime = (int) $this->getConfigValue('top.lifetime', 60 * 60 * 5);
+        if (! empty($this->stack)) {
+            $changes_made  = false;
+            $lifetime      = (int) $this->getConfigValue('top.lifetime', 60 * 60 * 5);
             $now_timestamp = Carbon::now()->getTimestamp();
 
             foreach ($this->stack as $key => $stacked_query) {
@@ -103,7 +95,7 @@ class TopQueriesAggregator extends AbstractAggregator
      */
     public function queryDurationIsMoreThenExistsInTopQueriesStack(DatabaseQuery $query)
     {
-        if (!empty($this->stack)) {
+        if (! empty($this->stack)) {
             foreach ($this->stack as $stacked_query) {
                 if ($stacked_query instanceof DatabaseQuery && $query->getDuration() > $stacked_query->getDuration()) {
                     return true;
@@ -132,7 +124,7 @@ class TopQueriesAggregator extends AbstractAggregator
                 $excludes_list = array_filter((array) $this->getConfigValue('top.exclude.list', []));
             }
 
-            if (!empty($excludes_list)) {
+            if (! empty($excludes_list)) {
                 $query_content = Str::lower((string) $query->getQueryContent());
 
                 foreach ($excludes_list as $exclude) {
@@ -227,5 +219,13 @@ class TopQueriesAggregator extends AbstractAggregator
     public function toArray()
     {
         return (array) $this->stack;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getStorageKeyName()
+    {
+        return 'database_queries_profiler_top';
     }
 }

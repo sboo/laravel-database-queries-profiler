@@ -2,11 +2,8 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Commands;
 
-use Illuminate\Support\Str;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
-
 /**
- * Class ProfilerSettingsCommand
+ * Class ProfilerSettingsCommand.
  *
  * @todo: Write class description.
  */
