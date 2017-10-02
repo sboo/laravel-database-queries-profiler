@@ -31,7 +31,7 @@
     }
   },
   "suggest": {
-    "predis/predis": "Use Laravel cache driver with predis driver"
+    "predis/predis": "Use Laravel cache with redis driver"
   },
   "support": {
     "issues": "https://github.com/tarampampam/laravel-database-queries-profiler/issues",

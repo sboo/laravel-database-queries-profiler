@@ -60,9 +60,9 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
                 : null
             );
 
-        $log_enabled = (bool) $this->getConfigValue('logging.queries.all.enabled', false);
-
         if ($query instanceof DatabaseQuery && $query->isValid()) {
+            $log_enabled = (bool) $this->getConfigValue('logging.queries.all.enabled', false);
+
             if ($log_enabled) {
                 $this->writeQueryIntoLog($query);
             }
