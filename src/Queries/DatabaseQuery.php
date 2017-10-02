@@ -2,12 +2,12 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Queries;
 
-use Carbon\Carbon;
 use Throwable;
 use Traversable;
+use Carbon\Carbon;
 
 /**
- * Class DatabaseQuery
+ * Class DatabaseQuery.
  *
  * Profiled query object.
  */
@@ -88,11 +88,10 @@ class DatabaseQuery extends AbstractQuery
      */
     public function isValid()
     {
-        return (
-            !empty($this->getQueryContent())
-            && !empty($this->getDuration())
-            && !empty($this->getWhen())
-        );
+        return
+            ! empty($this->getQueryContent())
+            && ! empty($this->getDuration())
+            && ! empty($this->getWhen());
     }
 
     /**
@@ -114,7 +113,7 @@ class DatabaseQuery extends AbstractQuery
      */
     public function setQueryContent($query_content)
     {
-        if (is_string($query_content) && !empty($query_content)) {
+        if (is_string($query_content) && ! empty($query_content)) {
             $this->query_content = $query_content;
         }
 
@@ -204,7 +203,7 @@ class DatabaseQuery extends AbstractQuery
      */
     public function setConnectionName($connection_name)
     {
-        if (is_string($connection_name) && !empty($connection_name)) {
+        if (is_string($connection_name) && ! empty($connection_name)) {
             $this->connection_name = $connection_name;
         }
 

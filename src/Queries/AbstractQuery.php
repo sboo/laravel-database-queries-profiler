@@ -2,15 +2,15 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Queries;
 
-use Carbon\Carbon;
 use DateTime;
 use Exception;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Traversable;
+use Carbon\Carbon;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
- * Class AbstractQuery
+ * Class AbstractQuery.
  *
  * Profiled query object.
  */
@@ -103,7 +103,5 @@ abstract class AbstractQuery implements Arrayable, Jsonable
         } catch (Exception $e) {
             // Do nothing
         }
-
-        return null;
     }
 }

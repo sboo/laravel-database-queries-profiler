@@ -3,19 +3,19 @@
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
 use DateTime;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Database\Events\QueryExecuted;
-use Illuminate\Support\Facades\Event;
+use Throwable;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Contracts\Foundation\Application;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerTopCommand;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerCountersCommand;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerSettingsCommand;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerTopCommand;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
-use Throwable;
 
 /**
- * Class DatabaseQueriesProfilerServiceProvider
+ * Class DatabaseQueriesProfilerServiceProvider.
  *
  * Service provider for database queries profiler.
  */
@@ -71,6 +71,16 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get config root key name.
+     *
+     * @return string
+     */
+    public static function getConfigRootKeyName()
+    {
+        return 'database-queries-profiler';
+    }
+
+    /**
      * Initialize configs.
      *
      * @return void
@@ -82,16 +92,6 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
         $this->publishes([
             realpath(static::CONFIG_PATH) => config_path(basename(static::CONFIG_PATH)),
         ], 'config');
-    }
-
-    /**
-     * Get config root key name.
-     *
-     * @return string
-     */
-    public static function getConfigRootKeyName()
-    {
-        return 'database-queries-profiler';
     }
 
     /**
