@@ -2,12 +2,12 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Tests;
 
-use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Log\Writer as IlluminateLogWriter;
+use Illuminate\Cache\Repository as CacheRepository;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
+use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
  * Class DatabaseQueriesProfilerTest.
@@ -18,6 +18,26 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
      * @var DatabaseQueriesProfiler
      */
     protected $instance;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->instance = new DatabaseQueriesProfiler($this->app);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        unset($this->instance);
+
+        parent::tearDown();
+    }
 
     /**
      * Test '->instance()' method.
@@ -97,25 +117,5 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
     {
         $this->assertInstanceOf(TopQueriesAggregator::class, $this->instance->top());
         $this->assertInstanceOf(CountersAggregator::class, $this->instance->counters());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->instance = new DatabaseQueriesProfiler($this->app);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->instance);
-
-        parent::tearDown();
     }
 }
