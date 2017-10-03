@@ -23,11 +23,13 @@ if (! function_exists('dbProfilerCounters')) {
     /**
      * Get the 'counters' aggregator.
      *
+     * @param string|null $counter_name
+     *
      * @return CountersAggregator
      */
-    function dbProfilerCounters()
+    function dbProfilerCounters($counter_name = null)
     {
-        return DatabaseQueriesProfilerFacade::counters();
+        return DatabaseQueriesProfilerFacade::counters($counter_name);
     }
 }
 

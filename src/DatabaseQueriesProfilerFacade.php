@@ -15,9 +15,11 @@ use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\
  *
  * @method static DatabaseQueriesProfiler instance()
  * @method static void registerQuery(DatabaseQuery|array|Traversable $query)
- * @method static CountersAggregator counters()
+ * @method static CountersAggregator counters(string|null $counter_name = null)
  * @method static TopQueriesAggregator top()
  * @method static void clearAll()
+ *
+ * @see DatabaseQueriesProfiler
  */
 class DatabaseQueriesProfilerFacade extends Facade
 {
