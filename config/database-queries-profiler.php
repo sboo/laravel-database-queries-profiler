@@ -1,28 +1,41 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
 
     /*
-     |--------------------------------------------------------------------------
-     | Laravel database profiler settings
-     |--------------------------------------------------------------------------
-     */
+    |--------------------------------------------------------------------------
+    | Laravel database queries profiler settings
+    |--------------------------------------------------------------------------
+    |
+    | Profiler is enabled?
+    */
 
-    // Profiler is enabled?
     'enabled' => (bool) env('DATABASE_QUERIES_PROFILER_ENABLED', true),
 
-    // Statistics (and any other data) storage (we use one of 'cache' storage).
+    /*
+    |--------------------------------------------------------------------------
+    | Statistics (and any other data) storage
+    |--------------------------------------------------------------------------
+    |
+    | We use one of 'cache' storage.
+    */
+
     'storage' => [
 
         // Storage driver name. Set one of "cache.stores" storage name.
-        // Default: "file", strongly recommended: "redis".
+        // Default: "file", strongly recommended: "redis"
         'use' => env('CACHE_DRIVER', 'file'),
 
     ],
 
-    // Top (most "expensive") queries statistics
+    /*
+    |--------------------------------------------------------------------------
+    | Top (most "expensive") queries statistics
+    |--------------------------------------------------------------------------
+    |
+    | We use one of 'cache' storage.
+    */
+
     'top' => [
 
         // ..is enabled?
@@ -39,6 +52,7 @@ return [
 
             // ..is enabled?
             'enabled' => false,
+
             // Array of sub-strings (case insensitive), like: 'select * from "users"'
             'list' => [''],
 
@@ -46,22 +60,29 @@ return [
 
     ],
 
-    // Statistics counters statistics
+    /*
+    |--------------------------------------------------------------------------
+    | Counters statistics
+    |--------------------------------------------------------------------------
+    |
+    | Min/max/avg values for queries per 5/15/60 seconds.
+    */
+
     'counters' => [
 
-        // !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!!
-        // !!!               DO NOT USE THIS FEATURE ON PRODUCTION ENVIRONMENT                 !!!
-        // !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!!
-
         // ..is enabled? By default - enabled on non-production environment
-        'enabled' => (bool) env(
-            'DATABASE_QUERIES_PROFILER_COUNTERS_ENABLED',
-            ! Str::contains(env('APP_ENV', 'production'), 'prod')
-        ),
+        'enabled' => (bool) env('DATABASE_QUERIES_PROFILER_COUNTERS_ENABLED', true),
 
     ],
 
-    // Logging settings
+    /*
+    |--------------------------------------------------------------------------
+    | Logging settings
+    |--------------------------------------------------------------------------
+    |
+    | We can write into default laravel log file some additional information.
+    */
+
     'logging' => [
 
         // Database queries
@@ -74,11 +95,11 @@ return [
                 'enabled' => (bool) env('DATABASE_QUERIES_PROFILER_LOGGING_QUERIES_ALL_ENABLED', true),
 
                 // Log entries level (One of: 'debug', 'info', 'notice', 'warning', 'error', 'critical',
-                // 'alert', 'emergency')
-                // Don`t forget set "APP_LOG_LEVEL=debug" if you use 'debug' level
+                // 'alert', 'emergency'). Don't forget set "APP_LOG_LEVEL=debug", if you use 'debug' level
                 'level'   => 'debug',
 
             ],
+
         ],
 
     ],
