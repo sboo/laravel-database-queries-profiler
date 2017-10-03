@@ -1,11 +1,11 @@
 <?php
 
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
+use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerFacade;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerFacade;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
-if (!function_exists('dbProfilerRegisterQuery')) {
+if (! function_exists('dbProfilerRegisterQuery')) {
     /**
      * Register database query.
      *
@@ -19,7 +19,7 @@ if (!function_exists('dbProfilerRegisterQuery')) {
     }
 }
 
-if (!function_exists('dbProfilerCounters')) {
+if (! function_exists('dbProfilerCounters')) {
     /**
      * Get the 'counters' aggregator.
      *
@@ -31,7 +31,7 @@ if (!function_exists('dbProfilerCounters')) {
     }
 }
 
-if (!function_exists('dbProfilerTop')) {
+if (! function_exists('dbProfilerTop')) {
     /**
      * Get the 'top' aggregator.
      *
