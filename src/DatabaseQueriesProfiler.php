@@ -50,8 +50,10 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
      * Register database query.
      *
      * @param DatabaseQuery|array|Traversable $query
+     *
+     * @return void
      */
-    public function requesterQuery($query)
+    public function registerQuery($query)
     {
         $query = $query instanceof DatabaseQuery
             ? $query

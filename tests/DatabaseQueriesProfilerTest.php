@@ -95,7 +95,7 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
     }
 
     /**
-     * Test '->requesterQuery()' method.
+     * Test '->registerQuery()' method.
      *
      * @return void
      */
@@ -106,7 +106,7 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
         $query = new DatabaseQuery($test_array);
 
         foreach ([$query, $test_array] as $item) {
-            $this->instance->requesterQuery($item);
+            $this->instance->registerQuery($item);
         }
 
         $this->assertNotEmpty($this->instance->top()->toArray());
@@ -124,7 +124,7 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
     }
 
     /**
-     * Test '->requesterQuery()' method with .
+     * Test '->registerQuery()' method with .
      *
      * @return void
      */

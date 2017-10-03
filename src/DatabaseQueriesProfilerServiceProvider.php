@@ -2,7 +2,7 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
-use Throwable;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -147,13 +147,13 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
                 $query = vsprintf($query, $bindings);
 
                 // Register query
-                $this->app->make('DatabaseQueriesProfiler')->requesterQuery(new DatabaseQuery([
+                $this->app->make('DatabaseQueriesProfiler')->registerQuery(new DatabaseQuery([
                     'bindings'        => $bindings,
                     'duration'        => $duration,
                     'connection_name' => $connection_name,
                     'query'           => $query,
                 ]));
-            } catch (Throwable $e) {
+            } catch (Exception $e) {
                 Log::error($e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
             }
         });

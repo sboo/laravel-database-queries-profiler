@@ -24,7 +24,10 @@
   "autoload": {
     "psr-4": {
       "Tarampampam\\LaravelDatabaseQueriesProfiler\\": "src"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
