@@ -2,16 +2,16 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Tests;
 
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Database\Connection as DatabaseConnection;
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use InvalidArgumentException;
-use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerServiceProvider;
+use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Connection as DatabaseConnection;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
+use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerServiceProvider;
 
 /**
  * Class AbstractUnitTestCase.
@@ -56,7 +56,7 @@ abstract class AbstractUnitTestCase extends BaseTestCase
         $database_file_path      = $this->getConfigRepository($app)->get('database.connections.sqlite.database');
         $database_directory_path = File::dirname($database_file_path);
 
-        if (!is_dir($database_directory_path)) {
+        if (! is_dir($database_directory_path)) {
             File::makeDirectory($database_directory_path, 0775, true);
         }
 
@@ -64,7 +64,7 @@ abstract class AbstractUnitTestCase extends BaseTestCase
             File::delete($database_file_path);
         }
 
-        if (!file_exists($database_file_path)) {
+        if (! file_exists($database_file_path)) {
             File::put($database_file_path, null);
         }
 

@@ -2,8 +2,6 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
-use DateTime;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerClearCommand;
 use Throwable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Event;
@@ -12,6 +10,7 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Contracts\Foundation\Application;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerTopCommand;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerClearCommand;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerCountersCommand;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerSettingsCommand;
 

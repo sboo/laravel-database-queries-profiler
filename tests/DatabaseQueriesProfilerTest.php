@@ -2,14 +2,14 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Tests;
 
-use Illuminate\Cache\Repository as CacheRepository;
-use Illuminate\Log\Writer as IlluminateLogWriter;
 use Illuminate\Support\Collection;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
-use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
+use Illuminate\Log\Writer as IlluminateLogWriter;
+use Illuminate\Cache\Repository as CacheRepository;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
+use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
 
 /**
  * Class DatabaseQueriesProfilerTest.
@@ -20,6 +20,28 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
      * @var DatabaseQueriesProfiler
      */
     protected $instance;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->prepareDatabase($this->app, true);
+        $this->instance = new DatabaseQueriesProfiler($this->app);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        $this->instance->clearAll();
+        unset($this->instance);
+
+        parent::tearDown();
+    }
 
     /**
      * Test '->instance()' method.
@@ -151,27 +173,5 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
                 $this->assertTrue($value < 100);
             }
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->prepareDatabase($this->app, true);
-        $this->instance = new DatabaseQueriesProfiler($this->app);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        $this->instance->clearAll();
-        unset($this->instance);
-
-        parent::tearDown();
     }
 }
