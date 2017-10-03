@@ -2,12 +2,14 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Tests;
 
-use Illuminate\Log\Writer as IlluminateLogWriter;
 use Illuminate\Cache\Repository as CacheRepository;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
-use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
+use Illuminate\Log\Writer as IlluminateLogWriter;
+use Illuminate\Support\Collection;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
+use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
  * Class DatabaseQueriesProfilerTest.
@@ -18,26 +20,6 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
      * @var DatabaseQueriesProfiler
      */
     protected $instance;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->instance = new DatabaseQueriesProfiler($this->app);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->instance);
-
-        parent::tearDown();
-    }
 
     /**
      * Test '->instance()' method.
@@ -95,7 +77,7 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
      *
      * @return void
      */
-    public function testRequesterQuery()
+    public function testRegisterQueryWithFakedQueryObjects()
     {
         $test_array = ['sql' => 'select * from "fucking_asshole"', 'duration' => 3.14];
 
@@ -117,5 +99,79 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
     {
         $this->assertInstanceOf(TopQueriesAggregator::class, $this->instance->top());
         $this->assertInstanceOf(CountersAggregator::class, $this->instance->counters());
+    }
+
+    /**
+     * Test '->requesterQuery()' method with .
+     *
+     * @return void
+     */
+    public function testRegisterQueryWithRealDatabaseRequests()
+    {
+        $unique_name    = 'unique_name_' . rand(1, 999999);
+        $unique_content = 'Unique content #' . rand(1, 999999);
+
+        // Insert data for test
+        $this->assertTrue($this->getTestTableQueryBuilderInstance()->insert([
+            'name'    => $unique_name,
+            'content' => $unique_content,
+        ]));
+
+        // Execute query
+        $result = $this->getTestTableQueryBuilderInstance()->get();
+
+        // Assert query result object instance
+        $this->assertInstanceOf(Collection::class, $result);
+
+        $query_profiled = false;
+        foreach ($this->instance->top()->toArray() as &$query) {
+            $this->assertInstanceOf(DatabaseQuery::class, $query);
+
+            /** @var DatabaseQuery $query */
+            if (str_contains($query->getQueryContent(), [$unique_name, $unique_content])) {
+                $query_profiled = true;
+            }
+        }
+        $this->assertTrue($query_profiled, 'Query was NOT profiled!');
+
+        $counters_as_array = $this->instance->counters()->toArray();
+        foreach (['last_five_seconds', 'last_fifteen_seconds', 'last_minute'] as $counter_name) {
+            /** @var CounterStack $counter */
+            $counter = $counters_as_array[$counter_name];
+
+            $this->assertInstanceOf(CounterStack::class, $counter);
+
+            foreach ([
+                         $counter->getMaximumDuration(),
+                         $counter->getMinimumDuration(),
+                         $counter->getAveragedDuration(),
+                     ] as $value) {
+                $this->assertIsFloat($value);
+                $this->assertTrue($value > 0);
+                $this->assertTrue($value < 100);
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->prepareDatabase($this->app, true);
+        $this->instance = new DatabaseQueriesProfiler($this->app);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        $this->instance->clearAll();
+        unset($this->instance);
+
+        parent::tearDown();
     }
 }

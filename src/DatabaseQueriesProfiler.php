@@ -95,6 +95,10 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
      */
     public function counters()
     {
+        if ($this->counters->isEnabled()) {
+            $this->counters->load();
+        }
+
         return $this->counters;
     }
 
@@ -105,7 +109,22 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
      */
     public function top()
     {
+        if ($this->top->isEnabled()) {
+            $this->top->load();
+        }
+
         return $this->top;
+    }
+
+    /**
+     * Clear all aggregated data.
+     *
+     * @return void
+     */
+    public function clearAll()
+    {
+        $this->top->clear(true);
+        $this->counters->clear(true);
     }
 
     /**

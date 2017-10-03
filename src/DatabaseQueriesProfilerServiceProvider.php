@@ -3,6 +3,7 @@
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
 use DateTime;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Commands\ProfilerClearCommand;
 use Throwable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Event;
@@ -68,6 +69,7 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
         }
 
         $this->commands(ProfilerSettingsCommand::class);
+        $this->commands(ProfilerClearCommand::class);
     }
 
     /**
@@ -141,17 +143,6 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
                 $duration        = floatval($query->time);
                 $connection_name = (string) $query->connection->getName();
 
-                // Format binding data for sql insertion
-                foreach ($bindings as $i => $binding) {
-                    if ($binding instanceof DateTime) {
-                        $bindings[$i] = $binding->format('Y-m-d H:i:s');
-                    } else {
-                        if (is_string($binding)) {
-                            $bindings[$i] = sprintf("'%s'", $binding);
-                        }
-                    }
-                }
-
                 // Insert bindings into query
                 $query = str_replace(['%', '?'], ['%%', '%s'], $query->sql);
                 $query = vsprintf($query, $bindings);
@@ -164,10 +155,7 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
                     'query'           => $query,
                 ]));
             } catch (Throwable $e) {
-                Log::error($e->getMessage(), [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                ]);
+                Log::error($e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
             }
         });
     }

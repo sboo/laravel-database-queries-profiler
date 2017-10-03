@@ -74,6 +74,7 @@ class DatabaseQuery extends AbstractQuery
                         break;
 
                     case 'duration':
+                    case 'time':
                         $this->setDuration($query_datum);
                         break;
 
@@ -84,7 +85,6 @@ class DatabaseQuery extends AbstractQuery
 
                     case 'when':
                     case 'timestamp':
-                    case 'time':
                     case 'datetime':
                         $this->setWhen($query_datum);
                         break;
@@ -169,7 +169,7 @@ class DatabaseQuery extends AbstractQuery
     {
         return [
             'duration'        => $this->getDuration(),
-            'query_content'   => $this->getQueryContent() . $this->getQueryContent() . $this->getQueryContent(),
+            'query_content'   => $this->getQueryContent(),
             'connection_name' => $this->getConnectionName(),
             'bindings'        => $this->getBindings(),
             'when'            => $this->getWhen(),

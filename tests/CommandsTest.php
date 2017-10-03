@@ -12,14 +12,20 @@ class CommandsTest extends AbstractUnitTestCase
      */
     public function testCommandsExecution()
     {
+        $this->prepareDatabase($this->app, true);
+
         $commands_names = [
             'profiler:counters',
             'profiler:settings',
             'profiler:top',
+            'profiler:clear',
         ];
 
         foreach ($commands_names as $commands_name) {
             $this->assertArtisanCommandExists($commands_name);
+
+            // Test execution method
+            $this->artisan($commands_name);
         }
     }
 
