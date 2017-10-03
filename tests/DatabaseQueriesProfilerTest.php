@@ -2,9 +2,11 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Tests;
 
+use InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Log\Writer as IlluminateLogWriter;
 use Illuminate\Cache\Repository as CacheRepository;
+use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerServiceProvider;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfiler;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
@@ -174,5 +176,40 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
 
             $this->assertInstanceOf(CounterStack::class, $this->instance->counters($counter_name));
         }
+    }
+
+    /**
+     * Test mass queries filling.
+     */
+    public function testMassFilling()
+    {
+        $top_max_count = config(sprintf(
+            '%s.top.size',
+            DatabaseQueriesProfilerServiceProvider::getConfigRootKeyName()
+        ));
+
+        for ($i = 0; $i <= $top_max_count * 2; $i++) {
+            $unique_name    = 'unique_name_' . rand(1, 999999);
+            $unique_content = 'Unique content #' . rand(1, 999999);
+
+            $this->getTestTableQueryBuilderInstance()->insert([
+                'name'    => $unique_name,
+                'content' => $unique_content,
+            ]);
+        }
+
+        $this->assertCount($top_max_count, $this->instance->top()->toArray());
+
+        //dump($this->instance->top());
+    }
+
+    /**
+     * Test throwing exception wits passing invalid counter name.
+     */
+    public function testGetCounterWithInvalidArgument()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->instance->counters('bla-bla');
     }
 }

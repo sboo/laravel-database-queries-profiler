@@ -162,11 +162,7 @@ class CounterStack implements Arrayable
         }
 
         if (! empty($floated_values_stack)) {
-            try {
-                return array_sum($floated_values_stack) / count($floated_values_stack);
-            } catch (Exception $e) {
-                // Do nothing
-            }
+            return array_sum($floated_values_stack) / count($floated_values_stack);
         }
 
         return 0.0;

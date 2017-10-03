@@ -12,7 +12,7 @@ Lightweight database queries profiler. Use Laravel cache as data storage.
 `->top()` data collector collects most "expensive" database queries (top `N` queries; count of "top" queries can be configured).
 
 `->count()` data collector collects all queries and can calculate min/max/averaged queries duration time.
-Also you can pass to the `->count(string $counter_name)` one of counters name:
+Also you can pass to the `->count(string $counter_name = null)` one of counters name:
  * `last_five_seconds`
  * `last_fifteen_seconds`
  * `last_minute`
@@ -51,7 +51,7 @@ After that you will able to use next **artisan** commands:
 
 Also you can use next "helpers":
  * `dbProfilerRegisterQuery(DatabaseQuery|array $query)` - Handy register database query
- * `dbProfilerCounters()` - Get the 'counters' aggregator
+ * `dbProfilerCounters(string $counter_name = null)` - Get the 'counters' aggregator
  * `dbProfilerTop()` - Get the 'top' aggregator
  
 ### Facade
