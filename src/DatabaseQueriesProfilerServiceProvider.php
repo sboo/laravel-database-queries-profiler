@@ -62,32 +62,6 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Generate user notice when used "bad" storage driver
-     *
-     * @return void
-     */
-    protected function checkStorageDriver()
-    {
-        $used_storage = $this->getConfigValue('storage.use');
-
-        if ($this->isProduction() && in_array($used_storage, $this->bad_storage_drivers)) {
-            trigger_error(sprintf(
-                'Use storage driver "%s" is bad idea for database queries profiler', $used_storage
-            ), E_USER_NOTICE);
-        }
-    }
-
-    /**
-     * Returns true, if app environment is production.
-     *
-     * @return bool
-     */
-    protected function isProduction()
-    {
-        return Str::contains($this->app->environment(), 'prod');
-    }
-
-    /**
      * Retrieve commands classes.
      *
      * @return void
@@ -114,6 +88,32 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
     public static function getConfigRootKeyName()
     {
         return 'database-queries-profiler';
+    }
+
+    /**
+     * Generate user notice when used "bad" storage driver.
+     *
+     * @return void
+     */
+    protected function checkStorageDriver()
+    {
+        $used_storage = $this->getConfigValue('storage.use');
+
+        if ($this->isProduction() && in_array($used_storage, $this->bad_storage_drivers)) {
+            trigger_error(sprintf(
+                'Use storage driver "%s" is bad idea for database queries profiler', $used_storage
+            ), E_USER_NOTICE);
+        }
+    }
+
+    /**
+     * Returns true, if app environment is production.
+     *
+     * @return bool
+     */
+    protected function isProduction()
+    {
+        return Str::contains($this->app->environment(), 'prod');
     }
 
     /**
