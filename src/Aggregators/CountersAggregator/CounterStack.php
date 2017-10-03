@@ -2,7 +2,6 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator;
 
-use Exception;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
