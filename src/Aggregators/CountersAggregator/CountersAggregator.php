@@ -5,9 +5,9 @@ namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggrega
 use Exception;
 use Carbon\Carbon;
 use InvalidArgumentException;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\AbstractAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerInterface;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
  * Class CountersAggregator.
@@ -109,8 +109,9 @@ class CountersAggregator extends AbstractAggregator
      *
      * @param string $counter_name
      *
-     * @return CounterStack
      * @throws InvalidArgumentException
+     *
+     * @return CounterStack
      */
     public function getCounterByName($counter_name)
     {
