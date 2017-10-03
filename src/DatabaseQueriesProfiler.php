@@ -2,11 +2,14 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
+use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CounterStack;
 use Traversable;
+use InvalidArgumentException;
 use Illuminate\Contracts\Foundation\Application;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator\CountersAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\TopQueriesAggregator;
+
 
 /**
  * Class DatabaseQueriesProfiler.
@@ -93,12 +96,20 @@ class DatabaseQueriesProfiler extends AbstractDatabaseQueriesProfiler
     /**
      * Get the 'counters' aggregator.
      *
-     * @return CountersAggregator
+     * @param string|null $counter_name
+     *
+     * @return CountersAggregator|CounterStack
+     *
+     * @throws InvalidArgumentException
      */
-    public function counters()
+    public function counters($counter_name = null)
     {
         if ($this->counters->isEnabled()) {
             $this->counters->load();
+        }
+
+        if (is_string($counter_name) && !empty($counter_name)) {
+            return $this->counters->getCounterByName($counter_name);
         }
 
         return $this->counters;

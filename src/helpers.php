@@ -7,7 +7,7 @@ use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\TopQueriesAggregator\
 
 if (! function_exists('dbProfilerRegisterQuery')) {
     /**
-     * Register database query.
+     * Handy register database query.
      *
      * @param DatabaseQuery|array|Traversable $query
      *

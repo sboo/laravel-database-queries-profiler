@@ -171,6 +171,8 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
                 $this->assertIsFloat($value);
                 $this->assertTrue($value > 0);
             }
+
+            $this->assertInstanceOf(CounterStack::class, $this->instance->counters($counter_name));
         }
     }
 }

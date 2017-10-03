@@ -2,10 +2,12 @@
 
 namespace Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\CountersAggregator;
 
+use Exception;
 use Carbon\Carbon;
-use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
+use InvalidArgumentException;
 use Tarampampam\LaravelDatabaseQueriesProfiler\Aggregators\AbstractAggregator;
 use Tarampampam\LaravelDatabaseQueriesProfiler\DatabaseQueriesProfilerInterface;
+use Tarampampam\LaravelDatabaseQueriesProfiler\Queries\DatabaseQuery;
 
 /**
  * Class CountersAggregator.
@@ -100,6 +102,23 @@ class CountersAggregator extends AbstractAggregator
             'last_fifteen_seconds' => $this->last_fifteen_seconds,
             'last_minute'          => $this->last_minute,
         ];
+    }
+
+    /**
+     * Get counter stack by name.
+     *
+     * @param string $counter_name
+     *
+     * @return CounterStack
+     * @throws InvalidArgumentException
+     */
+    public function getCounterByName($counter_name)
+    {
+        try {
+            return $this->{$counter_name};
+        } catch (Exception $e) {
+            throw new InvalidArgumentException('Invalid counter name', 404, $e);
+        }
     }
 
     /**
