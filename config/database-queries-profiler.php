@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -27,7 +29,7 @@ return [
         'enabled' => (bool) env('DATABASE_QUERIES_PROFILER_TOP_ENABLED', true),
 
         // Top queries stack size
-        'size' => 5,
+        'size' => 15,
 
         // Stored query lifetime (in seconds)
         'lifetime' => (int) env('DATABASE_QUERIES_PROFILER_TOP_LIFETIME', 10800), // 10800 = 3 hours
@@ -47,8 +49,15 @@ return [
     // Statistics counters statistics
     'counters' => [
 
-        // ..is enabled?
-        'enabled' => (bool) env('DATABASE_QUERIES_PROFILER_COUNTERS_ENABLED', true),
+        // !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!!
+        // !!!               DO NOT USE THIS FEATURE ON PRODUCTION ENVIRONMENT                 !!!
+        // !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!! WARNING !!!
+
+        // ..is enabled? By default - enabled on non-production environment
+        'enabled' => (bool) env(
+            'DATABASE_QUERIES_PROFILER_COUNTERS_ENABLED',
+            ! Str::contains(env('APP_ENV', 'production'), 'prod')
+        ),
 
     ],
 
