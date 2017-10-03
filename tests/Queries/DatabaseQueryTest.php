@@ -16,6 +16,26 @@ class DatabaseQueryTest extends AbstractUnitTestCase
     protected $query_object;
 
     /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->query_object = new DatabaseQuery;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        unset($this->query_object);
+
+        parent::tearDown();
+    }
+
+    /**
      * Test basic methods execution.
      *
      * @return void
@@ -111,40 +131,4 @@ class DatabaseQueryTest extends AbstractUnitTestCase
     {
         $this->assertJson($this->query_object->toJson());
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->query_object = new DatabaseQuery;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        unset($this->query_object);
-
-        parent::tearDown();
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
