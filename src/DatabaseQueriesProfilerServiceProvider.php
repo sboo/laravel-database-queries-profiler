@@ -3,6 +3,7 @@
 namespace Tarampampam\LaravelDatabaseQueriesProfiler;
 
 use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,13 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
     const CONFIG_PATH = __DIR__ . '/../config/database-queries-profiler.php';
 
     /**
+     * Array of "bad" database storage drivers names.
+     *
+     * @var array
+     */
+    protected $bad_storage_drivers = ['file', 'database', 'array'];
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
@@ -47,9 +55,36 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
         $this->registerDatabaseQueriesProfiler();
 
         if ($this->getConfigValue('enabled')) {
+            $this->checkStorageDriver();
             $this->attachEventsListener();
             $this->registerCommands();
         }
+    }
+
+    /**
+     * Generate user notice when used "bad" storage driver
+     *
+     * @return void
+     */
+    protected function checkStorageDriver()
+    {
+        $used_storage = $this->getConfigValue('storage.use');
+
+        if ($this->isProduction() && in_array($used_storage, $this->bad_storage_drivers)) {
+            trigger_error(sprintf(
+                'Use storage driver "%s" is bad idea for database queries profiler', $used_storage
+            ), E_USER_NOTICE);
+        }
+    }
+
+    /**
+     * Returns true, if app environment is production.
+     *
+     * @return bool
+     */
+    protected function isProduction()
+    {
+        return Str::contains($this->app->environment(), 'prod');
     }
 
     /**

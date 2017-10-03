@@ -17,7 +17,7 @@ return [
     'storage' => [
 
         // Storage driver name. Set one of "cache.stores" storage name.
-        // Default: "file", recommended: "redis".
+        // Default: "file", strongly recommended: "redis".
         'use' => env('CACHE_DRIVER', 'file'),
 
     ],
