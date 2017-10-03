@@ -170,7 +170,6 @@ class DatabaseQueriesProfilerTest extends AbstractUnitTestCase
                      ] as $value) {
                 $this->assertIsFloat($value);
                 $this->assertTrue($value > 0);
-                $this->assertTrue($value < 100);
             }
         }
     }
