@@ -48,7 +48,10 @@
     "laravel": {
       "providers": [
         "Tarampampam\\LaravelDatabaseQueriesProfiler\\DatabaseQueriesProfilerServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "DatabaseQueriesProfiler": "Tarampampam\\LaravelDatabaseQueriesProfiler\\DatabaseQueriesProfilerFacade"
+      }
     }
   }
 }
