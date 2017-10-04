@@ -43,7 +43,7 @@ class CountersAggregator extends AbstractAggregator
     }
 
     /**
-     * Get 'last five seconds' counter object.
+     * Getter for 'last five seconds' counter object.
      *
      * @return CounterStack
      */
@@ -53,7 +53,7 @@ class CountersAggregator extends AbstractAggregator
     }
 
     /**
-     * Get 'last fifteen seconds' counter object.
+     * Getter for 'last fifteen seconds' counter object.
      *
      * @return CounterStack
      */
@@ -63,7 +63,7 @@ class CountersAggregator extends AbstractAggregator
     }
 
     /**
-     * Get 'last minute' counter object.
+     * Getter for 'last minute' counter object.
      *
      * @return CounterStack
      */
@@ -93,7 +93,7 @@ class CountersAggregator extends AbstractAggregator
     /**
      * {@inheritdoc}
      *
-     * Warning! Array key name must equals stack property name!
+     * Warning! Array key name must be equals stack property name!
      */
     public function toArray()
     {
@@ -169,6 +169,8 @@ class CountersAggregator extends AbstractAggregator
      */
     public function aggregate(DatabaseQuery $query, $and_save = true)
     {
+        $this->load();
+
         $this->last_five_seconds->push($query);
         $this->last_fifteen_seconds->push($query);
         $this->last_minute->push($query);

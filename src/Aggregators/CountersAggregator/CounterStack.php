@@ -144,9 +144,9 @@ class CounterStack implements Arrayable
     }
 
     /**
-     * Returns rounded values for array of float values.
+     * Returns rounded value for array of float values.
      *
-     * @param float[] ...$values
+     * @param float[] $values
      *
      * @return float
      */

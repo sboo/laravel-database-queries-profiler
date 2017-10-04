@@ -97,7 +97,7 @@ class TopQueriesAggregator extends AbstractAggregator
     {
         if (! empty($this->stack)) {
             foreach ($this->stack as $stacked_query) {
-                if ($stacked_query instanceof DatabaseQuery && $query->getDuration() > $stacked_query->getDuration()) {
+                if ($query->getDuration() > $stacked_query->getDuration()) {
                     return true;
                 }
             }
@@ -150,9 +150,7 @@ class TopQueriesAggregator extends AbstractAggregator
                 return 0;
             }
 
-            return ($a->getDuration() < $b->getDuration())
-                ? 1
-                : -1;
+            return ($a->getDuration() < $b->getDuration()) ? 1 : -1;
         });
     }
 
@@ -199,6 +197,8 @@ class TopQueriesAggregator extends AbstractAggregator
      */
     public function aggregate(DatabaseQuery $query, $and_save = true)
     {
+        $this->load();
+
         array_push($this->stack, $query);
 
         $this->sortStackByDuration();
