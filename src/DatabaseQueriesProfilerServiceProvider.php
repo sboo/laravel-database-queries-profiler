@@ -173,7 +173,7 @@ class DatabaseQueriesProfilerServiceProvider extends ServiceProvider
     {
         Event::listen(QueryExecuted::class, function (QueryExecuted $query) {
             try {
-                $bindings        = (array) $query->bindings;
+                $bindings        = array_map('strval', $query->bindings);
                 $duration        = floatval($query->time);
                 $connection_name = (string) $query->connection->getName();
 
